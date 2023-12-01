@@ -57,6 +57,6 @@ for x in f:
   sum += currentNum
         
 
-print("Part1:", sum)
+print("Part2:", sum)
 # print("Part2:", sum(foods))
 
