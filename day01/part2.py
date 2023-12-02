@@ -58,5 +58,4 @@ for x in f:
         
 
 print("Part2:", sum)
-# print("Part2:", sum(foods))
 
