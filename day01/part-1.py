@@ -25,7 +25,8 @@ for x in f:
   print(currentNum)
   sum += currentNum
         
-
+# My time and rank:
+# 00:16:21  7251
 print("Part1:", sum)
-# print("Part2:", sum(foods))
+
 

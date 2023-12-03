@@ -73,5 +73,8 @@ for i, row in enumerate(grid):
 sum = 0
 for x in vals:
   sum += x
+
+# My time and rank:
+# 01:20:18  8870
 print(sum)
 

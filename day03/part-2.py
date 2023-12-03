@@ -64,4 +64,6 @@ for i, row in enumerate(grid):
         sum += currElems[0]*currElems[1]
 
 
+# My time and rank:
+# 01:40:22  7551
 print(sum)

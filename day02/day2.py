@@ -53,6 +53,7 @@ for x in f:
 
   # Part 2:
   part2Sum += getMaxCubeCounts(games)
-  
-print("Part1: ", part1Sum)
-print("Part2: ", part2Sum)
+
+# My times and rank in comment 
+print("Part1: ", part1Sum) # 00:26:06  6009
+print("Part2: ", part2Sum) # 00:50:57  8845

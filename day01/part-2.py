@@ -56,6 +56,7 @@ for x in f:
   print(currentNum)
   sum += currentNum
         
-
+# My time and rank:
+# 00:34:26  3865
 print("Part2:", sum)
 
