@@ -45,4 +45,7 @@ for x in s:
 
 for x in seeds:
   print(x)
+
+# My time and rank:
+# 01:42:24  11847
 print("Part1:", min(seeds))
