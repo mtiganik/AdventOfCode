@@ -77,8 +77,6 @@ def cust_sort(a,b):
 
   return 0
 
-# for x in items:
-#   print(reorder_string(x[0]))
 cmp_items = cmp_to_key(cust_sort)
 items.sort(key = cmp_items)
 
@@ -86,7 +84,8 @@ sum = 0
 for idx,x in enumerate(items):
   print(x[0])
   sum += (idx+1)*x[1]
-
+# My time and rank:
+# 01:18:24   8647
 print("Part1:", sum)
 
 
