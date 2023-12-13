@@ -1,6 +1,7 @@
 f = open("input.txt")
 
 grid = []
+data = []
 currGrid = []
 for x in f:
     if x != '\n':
@@ -23,6 +24,9 @@ def findMirror(data):
         elif res == 1:
             if i == 0: 
                 return i+1 
+            elif i == len(data)-1:
+                print("Last line, check up")
+                return i+1
             val = loopThough(i,data)
             if val == -1: continue
             else: return val
@@ -50,6 +54,5 @@ for x in grid:
         cnt += res
     else: 
         cnt += res * 100
-
-# My time and rank:
+# my time and rank:
 print("Part1:", cnt) #02:38:14    8387
