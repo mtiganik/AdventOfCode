@@ -1,60 +1,58 @@
-from itertools import permutations
-
-
-def getCnt(string, cons):
-  max = max(cons)
-  if '#'*max in string:
-    r = 1
-  return 0
-  
-def generateDotsMap(dots, elements):
-  # Kõik elemendid nii taga kui saavad
-  vals = [dots-len(elements)+1] + [1]*(len(elements)-1) + [0]
-  val = '.'*vals[0]
-  for i in range(len(elements)):
-    val += '#'*elements[i] + '.'*vals[i+1]
-  # val = '.'*(dots - len(elements)+1) + ".".join(['#'*val for val in elements])
-  print(val, " lenght: ", len(val))
-
-  # Esimene üks koht eespool
-  val = '.'*(dots - len(elements))
-
-def makeOutPutLikeThis(string, cons):
-  lenght = len(string)
-  sumOfCons = sum(cons)
-  maxDots = lenght - sumOfCons
-  if maxDots < len(cons):
-    return 1
-  print("max dots ", maxDots," elements: ", cons, "str len: ", len(string) )
-  generateDotsMap(maxDots, cons)
-  return 0
-
+import itertools
 f = open("input.txt").read().splitlines()
+
+def isValidExpression(path, rule):
+    if path.count("#") != sum(rule):
+        return False
+    for i in rule:
+       subString = '#'*i
+       while True:
+            if path.startswith('.'):
+                path = path[1:]
+            elif path.startswith(subString):
+                if len(path) > len(subString):
+                    if path[len(subString)] == "#": return False
+                path = path[len(subString):]
+                break
+            else: return False
+    if '#' in path: return False
+    return True
+        
+          
+def generateExpressions(string, list, rule):
+    expr = []
+    validCnt = 0
+    for x in list:
+        val = ""
+        qCnt = 0
+        for i in range(len(string)):
+            if string[i] != '?':
+                val = val + string[i]
+            else:
+               bool = x[qCnt]
+               qCnt += 1
+               if bool == True: charToAdd = '#'
+               else: charToAdd ='.'
+               val = val + charToAdd
+        isValid = isValidExpression(val, rule)
+        if isValid:
+            validCnt += 1
+    return validCnt
+
+              
+def makeTrueFalseTable(n):
+    l = [False, True]
+    return [list(i) for i in itertools.product(l, repeat=n)]  
+
 cnt = 0
+for x in f:
+    x = x.split()
+    string = x[0]
+    trueFalsetableLen = string.count('?')
+    myList = makeTrueFalseTable(trueFalsetableLen)
+    cons = [int(var) for var in x[1].split(',')]
+    valids = generateExpressions(string, myList, cons)
+    cnt += valids
 
-
-def listOfElementsSum(elements, target_sum):
-  all_permutations = list(permutations(range(1, elements + 1), elements))
-  valid_permutations = [p for p in all_permutations if sum(p) == target_sum]
-
-  result = []
-  for p in valid_permutations:
-      result.extend(list(permutations(p)))
-
-  return result
-
-combinations = listOfElementsSum(3, 9)
-for combination in combinations:
-    print(list(combination))
-
-# for x in f:
-#   # print(x)
-#   x = x.split()
-#   string = x[0]
-#   cons = [int(var) for var in x[1].split(',')]
-#   cnt += makeOutPutLikeThis(string, cons)
-
-
-# for x in cons:
-#   print(x)
-
+# My time and rank
+print("Part 1", cnt) # 09:56:01   18568
