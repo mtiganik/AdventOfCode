@@ -1,3 +1,6 @@
+import time
+start_time = time.time()
+
 
 inputFile = "input.txt"
 data = []
@@ -75,8 +78,6 @@ def completePart1():
   data = []
   for x in f:
     data.append(list(x))
-
-  part1Sol = 0
   moveNorth()
   return findSolution()
 
@@ -89,31 +90,25 @@ def completePart2():
   for x in f:
     data.append(list(x))
 
-  saturationCycles = 150
-  for i in range(saturationCycles):
+  for i in range(150):
     peformTurn()
 
-  periodFinderCycles = 50
   sols = []
-  for i in range(periodFinderCycles):
+  for i in range(50):
     peformTurn()
     result = findSolution()
     sols.append(result)
 
   period = 0
-  start = sols[0]
-  targetCycles = 1000000000
   for i in range(1,len(sols)):
-    if sols[i] == start:
-      if sols[i+1] == sols[1]:
-        if sols[i+2] == sols[2]:
+    if sols[i] == sols[0] and sols[i+1] == sols[1] and sols[i+2] == sols[2]:
           period = i
           break
-  periodIndex = (targetCycles-saturationCycles) % period -1
-  return sols[periodIndex]
+  return sols[999999850 % period -1]
 
 # My time and rank
 print("Part 1: ", completePart1()) # 00:21:15   3436
 print("Part 2: ", completePart2()) # 02:05:14   4988
 
 
+print("--- %s seconds ---" % (time.time() - start_time))
