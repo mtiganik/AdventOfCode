@@ -1,11 +1,6 @@
-import time
-start_time = time.time()
 
-f = open("input.txt").read().splitlines()
-
+inputFile = "input.txt"
 data = []
-for x in f:
-  data.append(list(x))
 
 def moveNorth():
   for j in range(len(data[0])):
@@ -58,6 +53,7 @@ def moveEast():
             data[i][idx] = '.'
             data[i][idx+1] = 'O'
           idx += 1
+
 def peformTurn():
   moveNorth()
   moveWest()
@@ -72,30 +68,52 @@ def findSolution():
         cnt += len(data) -i
   return cnt
 
-saturationCycles = 150
-for i in range(saturationCycles):
-  peformTurn()
+def completePart1():
+  f = open(inputFile).read().splitlines()
 
-periodFinderCycles = 50
-sols = []
-for i in range(periodFinderCycles):
-  peformTurn()
-  result = findSolution()
-  sols.append(result)
+  global data
+  data = []
+  for x in f:
+    data.append(list(x))
 
-period = 0
-start = sols[0]
-targetCycles = 1000000000
-for i in range(1,len(sols)):
-  if sols[i] == start:
-    if sols[i+1] == sols[1]:
-      if sols[i+2] == sols[2]:
-        period = i
-        break
-print("Period: ", period)
-periodIndex = (targetCycles-saturationCycles) % period -1
-
-print("Part 2: ", sols[periodIndex])
+  part1Sol = 0
+  moveNorth()
+  return findSolution()
 
 
-print("--- %s seconds ---" % (time.time() - start_time))
+def completePart2():
+
+  f = open(inputFile).read().splitlines()
+  global data
+  data = []
+  for x in f:
+    data.append(list(x))
+
+  saturationCycles = 150
+  for i in range(saturationCycles):
+    peformTurn()
+
+  periodFinderCycles = 50
+  sols = []
+  for i in range(periodFinderCycles):
+    peformTurn()
+    result = findSolution()
+    sols.append(result)
+
+  period = 0
+  start = sols[0]
+  targetCycles = 1000000000
+  for i in range(1,len(sols)):
+    if sols[i] == start:
+      if sols[i+1] == sols[1]:
+        if sols[i+2] == sols[2]:
+          period = i
+          break
+  periodIndex = (targetCycles-saturationCycles) % period -1
+  return sols[periodIndex]
+
+# My time and rank
+print("Part 1: ", completePart1()) # 00:21:15   3436
+print("Part 2: ", completePart2()) # 02:05:14   4988
+
+
