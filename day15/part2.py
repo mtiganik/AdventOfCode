@@ -12,22 +12,41 @@ def getResult(path):
 cnt = 0
 # print(getResult("HASH",0))
 
-boxes = []
-for i in range(256):
-    boxes.append([i])
+boxes = [[] for _ in range(256)]
+
 for x in f:
     if "=" in x:
         lenNo = int(x.split("=")[1])
-        path = x.split("=")[0]
+        lenName = x.split("=")[0]
         remove = False
     else:
         lenNo = 0
-        path = x.split("-")[0]
+        lenName = x.split("-")[0]
         remove = True
-    boxNo = getResult(path)
+    boxNo = getResult(lenName)
     currBox = boxes[boxNo]
-    for i in currBox:
-        if i[0] == path:
-            
-    print(boxNo, " : " , path)
+    if len(currBox) == 0 and not remove:
+        boxes[boxNo].append([lenName, lenNo])
+    else:
+        changeHappened = False
+        for i in range(len(currBox)):
+            if boxes[boxNo][i][0] == lenName:
+                changeHappened = True
+                newVal = [lenName, lenNo]
+                if remove:
+                    del boxes[boxNo][i]
+                else: boxes[boxNo][i] = newVal
+                break
+        if not changeHappened:
+            if not remove:
+                boxes[boxNo].append([lenName, lenNo])
+
+cnt = 0
+for idx,box in enumerate(boxes):
+    for jdx,lens in enumerate(box):
+        currVal = (idx+1)*(jdx+1)*lens[1]
+        cnt += currVal
+        # print(lens[0], " : ", currVal)
+
+print("Part 2:",cnt)
 
