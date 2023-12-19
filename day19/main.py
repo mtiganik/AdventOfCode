@@ -50,6 +50,7 @@ for x in f:
     if workflow[0] == "in":
       start = workflow
     workflows.append(workflow)
+    # print(workflow)
   else:
     cmd = getComand(x)
     cmnds.append(cmd)
@@ -61,6 +62,7 @@ def getFlowById(flowId):
 
 cmdIdxs = ["x","m","a","s"]
 def getRatingResult(workflow,cmd):
+  # print("in flow for ", workflow)
   valToCompare,comparator = workflow[1][0][0], workflow[1][0][1]
   indexOfElem =  cmdIdxs.index(valToCompare)
   if comparator == '<' and cmd[indexOfElem] < workflow[1][1]: inRating = True
@@ -80,13 +82,19 @@ def getRatingResult(workflow,cmd):
     else:
       falseWFlow = workflow[1][3]
       if isinstance(falseWFlow, str):
-        newWorkflow = getFlowById(falseWFlow)
-      else: newWorkflow = getFlowById(workflow[1][3][0])
+        flow =getFlowById(falseWFlow)
+        return getRatingResult(flow,cmd)
+      else: 
+        # newWorkflow = getFlowById(workflow[1][3][0])
+        return getRatingResult([workflow[0],workflow[1][3] ],cmd)
       return getRatingResult(newWorkflow, cmd)
 
 
     print("a")
-
+cnt = 0
 for cmd in cmnds:
   isAccepted = getRatingResult(start, cmd)
-  print(isAccepted)
+  # print(isAccepted)
+  if isAccepted:
+    cnt += sum(cmd)
+print(cnt)
