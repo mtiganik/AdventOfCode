@@ -2,7 +2,7 @@ f = open("input.txt").read().splitlines()
 import numpy as np
 grid = []
 tGrid = []
-max = 100
+max = 150
 start = (0,0)
 for idx,x in enumerate(f):
   vals = list(x)
@@ -19,7 +19,8 @@ def makeMove(i,j,iter):
     if grid[i][j] == "." and tGrid[i][j] == max:
       tGrid[i][j] = iter
 iter = 0
-for i in range(64):
+steps = 150
+for i in range(steps):
   iter +=1 
   for i in range(len(grid)):
     for j in range(len(grid[0])):
