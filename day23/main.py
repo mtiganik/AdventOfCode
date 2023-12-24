@@ -1,4 +1,5 @@
 import sys
+import copy 
 
 
 f = open("input.txt").read().splitlines()
@@ -13,7 +14,7 @@ def checkmvnt(i,j,iter,Stc,oTGrid):
     if i == 10 and j == 21:
       print("")
     oTGrid[i][j] = iter + 1
-    ntGrid = oTGrid.copy()
+    ntGrid = copy.deepcopy(oTGrid)
     movePath(i,j,iter+1,ntGrid)
     return True
 
