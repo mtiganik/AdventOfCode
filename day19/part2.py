@@ -30,35 +30,40 @@ def getFlowById(flowId):
   for flow in workflows:
     if flow[0] == flowId: return flow
   raise TypeError("shouldnt get here")
-cmdIdxs = ["x","m","a","s"]
-resRanges = []
+
+def copyCurrRange(currRange):
+  return [range(currRange[0][0],currRange[0][-1]+1),
+                 range(currRange[1][0], currRange[1][-1]+1),
+                   range(currRange[2][0], currRange[2][-1]+1),
+                   range(currRange[3][0], currRange[3][-1]+1)]
 
 def getRes(currCoord, flow):
   letter, gt, valToCmp =cmdIdxs.index(flow[0][0]), flow[0][1], flow[1]
   currRange = currCoord[letter]
   if valToCmp in currRange:
     if flow[2] == 'A': return resRanges.append(currCoord)
-    elif flow[2] == 'R': return
-    range1,range2 = currCoord,currCoord
-    range1[letter], range2[letter] = range(currRange[0],valToCmp), range(valToCmp, currRange[-1])
+    elif flow[2] == 'R': 
+      return
+    range1,range2 = copyCurrRange(currCoord),copyCurrRange(currCoord)
+    range1[letter] = range(currRange[0],valToCmp)
+    range2[letter] =  range(valToCmp, currRange[-1]+1)
     if gt == '<':
         getRes(range1,getFlowById(flow[2])[1])
-        if isinstance(flow[3], str): getRes(range2,getFlowById(flow[3]))
+        if isinstance(flow[3], str): getRes(range2,getFlowById(flow[3])[1])
         else: getRes(range2, flow[3])
     elif gt == '>':
         getRes(range2,getFlowById(flow[2])[1])
-        if isinstance(flow[3], str): getRes(range1,getFlowById(flow[3]))
+        if isinstance(flow[3], str): getRes(range1,getFlowById(flow[3])[1])
         else: getRes(range2, flow[3])
   else:
     if isinstance(flow[3], str):
       if flow[3] == "A": return resRanges.append(currCoord)
       elif flow[3] == "R": return
       else: getRes(currCoord, getFlowById(flow[3])[1])
-    else: getRes(currCoord, flow[3])
-
-#   if gt == '<':
+    else: getRes(currCoord, flow[3])  
   
-  
+cmdIdxs = ["x","m","a","s"]
+resRanges = []
 startRange = [range(1,4000), range(1,4000), range(1,4000), range(1,4000)]
 getRes(startRange, getFlowById("in")[1])
 # getRes([1,1,1,1],getFlowById("in"))
