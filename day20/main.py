@@ -80,7 +80,7 @@ def sendSignal():
 
 
 print(sendSignal())
-# for x in input:
+# for x in input!:
 # def sendSignal():
 #     for i in range(10):
 #         cycleList = broadcaster[2]
