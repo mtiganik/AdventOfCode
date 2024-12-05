@@ -5,9 +5,9 @@ for x in open("input.txt"):
 
 
 def findMas(y,x):
-  ul,ur,dr,dl = data[y-1][x-1], data[y-1][x+1],data[y+1][x+1],data[y+1][x-1]
-  if ul == dr or ur == dl: return 0
-  if all(x in ul+dr for x in ["M","S"]) and all(x in ur+dl for x in ["M","S"]):
+  pd, nd = data[y-1][x-1] + data[y+1][x+1], data[y-1][x+1] + data[y+1][x-1]
+  matches = ["MS","SM"]
+  if any(x in pd for x in matches) and any(x in nd for x in matches):
     return 1
   return 0
 
