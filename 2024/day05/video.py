@@ -28,7 +28,7 @@ def swapNums(book):
       if book.index(rule[0]) > book.index(rule[1]):
         tmp = book[book.index(rule[0])]
         book[book.index(rule[0])] = book[book.index(rule[1])]
-        book[book.index(rule[1])] = tmp
+        book[book.index(rule[0])] = tmp
         return 0
 
 
