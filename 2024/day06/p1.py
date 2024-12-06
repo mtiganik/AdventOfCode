@@ -40,7 +40,6 @@ while True:
 
 sum = 0
 for k in data:
-  # print("".join(k))
   sum += k.count("x")
 print(sum)
 

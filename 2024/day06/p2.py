@@ -98,21 +98,21 @@ for j in range(len(data)):
       nd = copy.deepcopy(eData)
       el = data[j][i]
       nd[j][i] = "#"
-      sj = j+1 if el == "^" else j-1 if el == "v" else j
-      si = i+1 if el == "<" else i-1 if el == ">" else i
-      dir = 1 if el == "^" else 2 if el == ">" else 3 if el == "v" else 0
-      if (j == 7 and i == 4):
-        print("db")
-      if (j == 8 and i == 7):
-        print("")
-      if (j == 8 and i == 8):
-        print("")
-      if j == 9 and i == 2:
-        print("")
-      if j == 9 and i == 4:
-        print("")
-      if j== 10 and i == 8:
-        print("")
-      p2Sum += checkForCycle(nd,sj,si,dir)
+      # sj = j+1 if el == "^" else j-1 if el == "v" else j
+      # si = i+1 if el == "<" else i-1 if el == ">" else i
+      # dir = 1 if el == "^" else 2 if el == ">" else 3 if el == "v" else 0
+      # if (j == 7 and i == 4):
+      #   print("db")
+      # if (j == 8 and i == 7):
+      #   print("")
+      # if (j == 8 and i == 8):
+      #   print("")
+      # if j == 9 and i == 2:
+      #   print("")
+      # if j == 9 and i == 4:
+      #   print("")
+      # if j== 10 and i == 8:
+      #   print("")
+      p2Sum += checkForCycle(nd,sY,sX,0)
 
 print(p2Sum)
