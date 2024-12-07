@@ -55,29 +55,4 @@ print("It took", length, "seconds!")
 
 
 
-# remInd = []
-# print("Initial Len: ", len(data))
-# def addUp(inp,i):
-#   total,nums = inp[0], inp[1]
-#   sums = sum(nums)
-#   if sums > total:
-#     remInd.append(i)
-#     # print("remove: " , total)
-#     return 0
-#   if sums == total:
-#     remInd.append(i)
-#     # print("Sums total: " , total)
-#     return total
-#   return  0
-  
-
-
-
-# print("New list: ", len(data))
-# # for x in data:
-# #   print(x)
-# # print("P1: ", res)
-
-
-
 
