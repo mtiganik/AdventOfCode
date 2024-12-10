@@ -14,8 +14,6 @@ for x in open("input.txt"):
 grid.insert(0,["*"]*len(grid[0]))
 grid.append(["*"]*len(grid[0]))
 
-for k in grid:
-  print(k)
 
 
 def generateStartGrid():
@@ -25,14 +23,19 @@ def generateStartGrid():
   return endGrid
 
 
-def checkCoord(y,x,currNum,cg):
+def checkCoord(y,x,currNum,cg,isPartTwo):
   if grid[y][x] == currNum:
-    cg[y][x] = currNum
-    return [y,x]
-    # if cg[y][x] == 1000:
+    if isPartTwo:
+      cg[y][x] = currNum
+      return [y,x]
+    else:
+      if cg[y][x] == 1000:
+        cg[y][x] = currNum
+        return [y,x]
   return None
 
-def findPaths(y,x,cg):
+def findPaths(y,x, isPartTwo):
+  cg = generateStartGrid()
   cg[y][x] = 0
   currplaces = []
   currplaces.append([y,x])
@@ -41,10 +44,10 @@ def findPaths(y,x,cg):
     currNum += 1
     newPlaces = []
     for k in currplaces:
-      newPlaces.append(checkCoord(k[0]-1 ,k[1]  ,currNum,cg))
-      newPlaces.append(checkCoord(k[0]   ,k[1]+1,currNum,cg))
-      newPlaces.append(checkCoord(k[0]+1 ,k[1]  ,currNum,cg))
-      newPlaces.append(checkCoord(k[0]   ,k[1]-1,currNum,cg))
+      newPlaces.append(checkCoord(k[0]-1 ,k[1]  ,currNum,cg,isPartTwo))
+      newPlaces.append(checkCoord(k[0]   ,k[1]+1,currNum,cg,isPartTwo))
+      newPlaces.append(checkCoord(k[0]+1 ,k[1]  ,currNum,cg,isPartTwo))
+      newPlaces.append(checkCoord(k[0]   ,k[1]-1,currNum,cg,isPartTwo))
     
     currplaces = []
     for m in newPlaces:
@@ -56,15 +59,13 @@ def findPaths(y,x,cg):
     if currNum == 9:
       return len(currplaces)
 
-
-
-stGrid = generateStartGrid()
-total = 0
+p1Sum, p2Sum = 0,0
 for j in range(len(grid)):
   for i in range(len(grid[0])):
     if grid[j][i] == 0:
-      cg = generateStartGrid()
-      
-      total += findPaths(j,i,cg)
+      p1Sum += findPaths(j,i, False)
+      p2Sum += findPaths(j,i, True)
 
-print(total)
+print("Part 1:" , p1Sum)
+print("Part 2:" , p2Sum)
+# https://www.youtube.com/watch?v=Av9bJx76rcQ
