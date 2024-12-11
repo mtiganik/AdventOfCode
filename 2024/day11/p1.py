@@ -32,6 +32,6 @@ def ExecuteBlinksForThisDigit(num, n):
 n = 25
 sum = 0
 for k in stones:
-  print("El: ", k)
+  #print("El: ", k)
   sum += ExecuteBlinksForThisDigit(k,n)
 print(sum)
