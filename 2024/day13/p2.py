@@ -1,7 +1,7 @@
 
 currx,curry = [],[]
 total = 0
-
+i = 1
 bnum = 10000000000000
 def calcResult(x,y):
   A = (x[2]*y[1]-x[1]*y[2])/(x[0]*y[1]-x[1]*y[0])
@@ -28,6 +28,7 @@ for k in open("input.txt"):
   else:
     currx.append(x)
     curry.append(y)
+  i += 1
 
 
 print(total)
