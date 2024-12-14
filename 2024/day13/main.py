@@ -1,5 +1,5 @@
 
-p1,p2,currx,curry,i, bnum = 0,0,[],[],0,10000000000000
+input,p1,p2,currx,curry,i, bnum = "input.txt",0,0,[],[],0,10000000000000
 
 def calcResult(x,y,bn,p1c,p2c):
   X1,Y1,X2,Y2,div,p2Res,p1Res = x[2],y[2],x[2]+bn,y[2]+bn,x[0]*y[1]-x[1]*y[0],0,0
@@ -8,7 +8,7 @@ def calcResult(x,y,bn,p1c,p2c):
   p2Res = 3*int(A2) + int(B2) if A2.is_integer() and B2.is_integer() else 0
   return [p1Res+p1c,p2Res+p2c]
 
-for k in open("input.txt"):
+for k in open(input):
   if k.strip() == "":continue
   arr,i = ((k.replace("=","+")).split(": ")[1]).split(", "), i+1
   currx.append(int(arr[0].split("+")[1]))
@@ -16,4 +16,6 @@ for k in open("input.txt"):
   if i%3 == 0:[p1,p2],currx,curry = calcResult(currx,curry,bnum,p1,p2), [],[]
 
 print("Part 1:", p1)
-print("Part 2:", p2)
+print("Part 2:", p2) 
+
+
