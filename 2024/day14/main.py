@@ -1,12 +1,7 @@
 
-a1 = (11,7)
-a2 = (101,103)
-
-ca = a2
 xlen,ylen = 101,103
-# middleX, middleY = ca[0]//2,ca[1]//2
-# print(middleX,middleY)
-# secs = 100
+
+c1,c2,c3,c4 = 0,0,0,0
 arr = []
 for k in open("input.txt"):
   arr1 = k.strip().split(" v=")
@@ -14,9 +9,17 @@ for k in open("input.txt"):
   xstart,ystart = int(initials[0]),int(initials[1])
   velocities = arr1[1].split(",")
   xvel,yvel = int(velocities[0]), int(velocities[1])
-  # xe = (xstart + (secs*xvel)%ca[0])%ca[0]
-  # ye = (ystart + (secs*yvel)%ca[1])%ca[1]
+  xe = (xstart + 100*xvel)%xlen
+  ye = (ystart + 100*yvel)%ylen
   arr.append([xstart,ystart,xvel,yvel])
+  if xe == xlen//2 or ye == ylen//2: continue
+  else:
+    if   ye < ylen//2 and xe < xlen//2: c1 += 1
+    elif ye < ylen//2 and xe > xlen//2: c2 += 1
+    elif ye > ylen//2 and xe > xlen//2: c3 += 1
+    elif ye > ylen//2 and xe < xlen//2: c4 += 1
+
+print("Part 1:", c1*c2*c3*c4)
 
 sec = 0
 def IncrementAndCheckIfSomethingIsOnSameSpot():
@@ -34,18 +37,10 @@ while True:
   sec += 1
   res = IncrementAndCheckIfSomethingIsOnSameSpot()
   if res == 1:
-    print("after ", sec," secs:")
-    for i in range(ca[1]):
-      currStr = "."*ca[0]
-      for el in arr:
-        if el[1] == i:
-          if el[0] == xlen: currStr = currStr[:xlen-1] + "*"
-          else: currStr = currStr[:el[0]-1] + "*" + currStr[el[0]:] 
-      print(currStr)
-    print("")
-  if sec > 11000:
-    print("shouldnt get here")
+    print("Part 2:", sec)
     break
+
+# https://youtu.be/hlcb8FnBKb0
 
 
 
