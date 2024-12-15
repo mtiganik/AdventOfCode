@@ -45,10 +45,7 @@ def checkAvailability(y,dy,ycnt,xs,xe):
 def moveY(y,dy,ycnt,xs,xe):
 
   for i in [xs,xe]:
-    if p2grid[y+ycnt*dy][i] == "#":
-      raise Exception("shouldnt get here")
-      return -1
-    elif p2grid[y+ycnt*dy][i] == "[":
+    if p2grid[y+ycnt*dy][i] == "[":
       moveY(y,dy,ycnt +1,i,i+1)
     elif p2grid[y+ycnt*dy][i] == "]":
       moveY(y,dy,ycnt +1,i-1,i)  
@@ -77,7 +74,6 @@ def moveP2(char):
     res = checkAvailability(y,dy,ycnt,xs,xe)
     if res == -1: return
     else:
-      # print("Got to move")
       if p2grid[y+dy][x] == "[":
         moveY(y,dy,ycnt,x,x+1)
       else:
@@ -93,8 +89,7 @@ def moveP2(char):
       cnt += 1
       if p2grid[y][x+cnt*dx] == "#":
         return
-      # left/right
-      elif p2grid[y][x+cnt*dx] == ".":
+      else:
         for i in range(x,x+cnt*dx,dx):
           if p2grid[y][i] == "[":p2grid[y][i] = "]"
           elif p2grid[y][i] =="]": p2grid[y][i] = "["
@@ -103,8 +98,6 @@ def moveP2(char):
         p2grid[y+dy][x+dx] = "@"
         x,y = x +dx, y+dy
         return
-  else:
-    raise Exception("shouldnt get here")
 
 
 def moveP1(char):
@@ -150,5 +143,6 @@ for j in range(len(p2grid)):
     if p2grid[j][indx] == "[":
         p2 += 100*j + indx
 
-print("Part1: ",p1)
-print("Part2: ",p2)
+print("Part1: ", p1)
+print("Part2: ", p2)
+#https://youtu.be/uDDC0i0bEns
