@@ -25,9 +25,7 @@ for k in open("input.txt"):
     i += 1
 
 def checkAvailability(y,dy,ycnt,xs,xe):
-  # for i in range(xs,xe):
   for i in [xs,xe]:
-
     elToCheck = grid[y+ycnt*dy][i] 
     res = 0
     if elToCheck== "#": return -1
@@ -35,7 +33,6 @@ def checkAvailability(y,dy,ycnt,xs,xe):
       res = checkAvailability(y, dy, ycnt+1, i, i+1)
     elif elToCheck == "]":
       res = checkAvailability(y, dy, ycnt+1, i-1, i)
-    #else: return 1
     if res == -1:
       return -1
   return 1
@@ -91,17 +88,11 @@ def makeMove(char):
       cnt += 1
       if grid[y][x+cnt*dx] == "#":
         return
-      # up/down
-
-
       # left/right
       elif grid[y][x+cnt*dx] == ".":
         for i in range(x,x+cnt*dx,dx):
           if grid[y][i] == "[":grid[y][i] = "]"
           elif grid[y][i] =="]": grid[y][i] = "["
-
-          # if grid[y][x+i] == "[":grid[y][x+i] = "]"
-          # elif grid[y][x+i] =="]": grid[y][x+i] = "["
         grid[y][x+cnt*dx] = "[" if char == "<" else "]"
         grid[y][x] = "."
         grid[y+dy][x+dx] = "@"
