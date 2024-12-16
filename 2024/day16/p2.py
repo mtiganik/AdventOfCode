@@ -58,6 +58,10 @@ while True:
     print("p1: ", checker)
     break
 
+dg[ye][xe] = checker
+
+
+
 def checkp2(y,x,prevElScore):
   if dg[y][x] != "x":
     if dg[y][x] < prevElScore:
@@ -66,20 +70,80 @@ def checkp2(y,x,prevElScore):
       return 1
   return 0
 
-p2Cnt = 1
+ShortestPath = 1
 p2grid = copy.deepcopy(grid)
 p2Arr = [[ye,xe,checker]]
 while True:
-
   p2Copy = copy.deepcopy(p2Arr)
   p2Arr = []
   for el in p2Copy:
     ny,nx,elScore = el[0],el[1],el[2]
     if elScore == 0:
-      print("found ", p2Cnt)
+      print("shortest path ", ShortestPath)
       break
-    p2Cnt += checkp2(ny-1 ,nx  ,elScore)
-    p2Cnt += checkp2(ny   ,nx+1,elScore)
-    p2Cnt += checkp2(ny+1 ,nx  ,elScore)
-    p2Cnt += checkp2(ny   ,nx-1,elScore)
+    ShortestPath += checkp2(ny-1 ,nx  ,elScore)
+    ShortestPath += checkp2(ny   ,nx+1,elScore)
+    ShortestPath += checkp2(ny+1 ,nx  ,elScore)
+    ShortestPath += checkp2(ny   ,nx-1,elScore)
+  if elScore == 0: break
+
+# print("Hello")
+def findDistance(y,x):
+
+  def checkElems(cy,cx,cnt):
+    nonlocal EFound
+    nonlocal SFound
+    if dg[cy][cx] != "x":
+      if ldg[cy][cx] == "x":
+        ldg[cy][cx] = cnt
+        currElemens.append([cy,cx])
+    if grid[cy][cx] == "S":
+      SFound = True
+    elif grid[cy][cx] == "E":
+      EFound = True
+
+
+  ldg = [["x" for i in range(len(grid[0]))] for j in range(len(grid))]
+  ldg[y][x] = 0
+  currElemens = [[y,x]]
+  cnt = 1
+  distToS,distToE,EFound,SFound, ESet,SSet = 0,0,False,False,False,False
+  while True:
+    elmsCpy = copy.deepcopy(currElemens)
+    currElemens = []
+    for el in elmsCpy:
+      ny,nx = el[0],el[1]
+      checkElems(ny-1,nx  , cnt)
+      checkElems(ny  ,nx+1, cnt)
+      checkElems(ny+1,nx  , cnt)
+      checkElems(ny  ,nx-1, cnt)
+    if SFound and not SSet:
+      distToS = cnt
+      SSet = True
+    if EFound and not ESet:
+      distToE = cnt
+      ESet = True
+    if EFound and SFound:
+      return distToS + distToE 
+    cnt += 1
+
+
+
+p2Sum = 0
+# y = 7
+# x = 3
+d1 = findDistance(2,15)
+d2 = findDistance(3,15)
+d3 = findDistance(4,15)
+d4 = findDistance(5,15)
+for j in range(len(dg)):
+  for i in range(len(dg[0])):
+    if isinstance(dg[j][i], (int)):
+      dist_to_start_and_end = findDistance(j,i)
+
+      if dist_to_start_and_end +1 == ShortestPath:
+        p2Sum += 1
+        p2grid[j][i] = 100
+
+print("part2",p2Sum +2)
 
