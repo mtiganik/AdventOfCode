@@ -48,7 +48,6 @@ def calculateRes(instr, operand):
     C = int(res)
 
 
-# ^
 print("hello")
 while True:
   instr, operand = pg[pt], pg[pt+1]
