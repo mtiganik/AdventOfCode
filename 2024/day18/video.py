@@ -47,3 +47,6 @@ while True:
     break
   if len(currElms) == 0:
     raise Exception("!")
+
+# Video here:
+# https://youtu.be/YLt4uhQxR5c
