@@ -71,4 +71,4 @@ while True:
 
 print("P2:", p2 ) # 0,7 sec
 
-
+# https://youtu.be/YLt4uhQxR5c
