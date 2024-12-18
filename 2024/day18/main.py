@@ -1,13 +1,5 @@
 import copy
 
-# Import the time library
-import time
-
-# Calculate the start time
-start = time.time()
-
-b = 12
-xlen, ylen = 6,6
 
 b = 1024 
 xlen,ylen = 70,70
@@ -15,18 +7,7 @@ xlen,ylen = 70,70
 
 g = [["." for i in range(xlen +1)] for j in range(ylen +1)]
 
-ncells = []
-cnt = 0
-for k in open("input.txt"):
-  x,y = k.strip().split(",")
-  ncells.append([int(y),int(x)])
-  g[int(y)][int(x)] = "#"
-
-
-
-
-def checkIfPathAvailable():
-
+def checkIfPathAvailable(p2 = True):
   def checkEl(y,x,cnt):
     global xlen,ylen
     if 0<=y <=ylen and 0 <= x <= xlen:
@@ -55,10 +36,27 @@ def checkIfPathAvailable():
       rs += checkEl(y+1 ,x  , cnt)
       rs += checkEl(y   ,x-1, cnt)
     if rs != 0:
-      return "Found"
+      return rs
     if len(currEls) == 0:
       return ""
 
+
+p1 = 0
+ncells = []
+cnt = 0
+for k in open("input.txt"):
+  x,y = k.strip().split(",")
+  ncells.append([int(y),int(x)])
+  g[int(y)][int(x)] = "#"
+  if cnt == 1024:
+    p1 = checkIfPathAvailable(False)
+  cnt += 1
+
+
+
+print("P1:", p1 ) # 0,1 sec
+
+p2 = ""
 el = 2
 while True:
   res = checkIfPathAvailable()
@@ -68,14 +66,9 @@ while True:
     y,x = el[0],el[1]
     g[y][x] = "."
   else:
-    sol = [prev[1],prev[0]]
-    print("P2: ", sol )
+    p2 = str(prev[1])+","+str(prev[0])
     break
 
+print("P2:", p2 ) # 0,7 sec
 
 
-end = time.time()
-length = end - start
-
-# Show the results : this can be altered however you like
-print("It took", length, "seconds!")
