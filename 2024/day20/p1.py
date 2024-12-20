@@ -20,21 +20,23 @@ dg = [["x" for k in range(len(g[0]))] for i in range(len(g))]
 dg[y][x] = 0
 
 maxCnt = 1
-def getLen(yr,xr):
-    global maxCnt
+def getLen():
     def checkElem(y,x,cc):
+        global maxCnt
         global ex,ey
         if y == ey and x == ex:
+            maxCnt = cc
+            dg[y][x] = cc
             return cc
         if g[y][x] == ".":
-            if cg[y][x] == "x":
-                cg[y][x] = cnt
+            if dg[y][x] == "x":
+                dg[y][x] = cc
                 currElems.append([y,x])
         return 0
                 
-    cg = copy.deepcopy(dg)
+    # cg = copy.deepcopy(dg)
     currElems = [[y,x]]
-    g[yr][xr] = "."
+    # g[yr][xr] = "."
     res = 0
     cc = 0
     while True:
@@ -47,13 +49,14 @@ def getLen(yr,xr):
             res += checkElem(cy  ,cx+1,cc)
             res += checkElem(cy+1,cx  ,cc)
             res += checkElem(cy  ,cx-1,cc)
-        if res != 0:
-            g[yr][xr] = "#"
-            return cc
+        # if res != 0:
+        #     g[yr][xr] = "#"
+        #     return cc
         if len(currElems) == 0:
-            raise Exception("!")
+            return
+            # raise Exception("!")
 
-ncl = getLen(0,0)
+getLen()
 
 def checkNeedToRemove(j,i):
     u,r,d,l = g[j-1][i],g[j][i+1],g[j+1][i],g[j][i-1]
@@ -68,16 +71,21 @@ def checkNeedToRemove(j,i):
 
     return 1
 
+def cheat(cy,cx):
+    # cc = dg[cy][cx]
+    u,r,d,l = dg[j-1][i],dg[j][i+1],dg[j+1][i],dg[j][i-1]
+    maxVal = max([x for x in [u,r,d,l] if isinstance(x,int)])
+    minVal = min([x for x in [u,r,d,l] if isinstance(x,int)])
+    return maxVal - minVal -2
+
 data = Counter()
 for j in range(1,len(g)-1):
     for i in range(1,len(g[0])-1):
         if g[j][i] == "#":
             if checkNeedToRemove(j,i):
-                nl = getLen(j,i)
-                if nl +100 <= ncl:
-                    data.update([ncl-nl])
-                    # print("Cheat " ,i,j, "saves", ncl-nl)
-    print("Row", j)
+                nl = cheat(j,i)
+                if nl >= 100:
+                    data.update([nl])
 
-print(data)
+# print(data)
 print("p1",sum(data.values()))
