@@ -9,67 +9,48 @@ def prune(currSecret):
 
 def secret2kStep(n):
     secret = n
-    # step1
     given = secret*64
     secret = mix(given, secret)
     secret = prune(secret)
-
-    # step2
     given = int(secret /32)
     secret = mix(given, secret)
     secret = prune(secret)
-
-    #step3
     given = secret*2048
     secret = mix(given,secret)
     secret = prune(secret)
     return secret
 
-
-# cc = Counter()
-# myKey = "Hello"
-# cc.update({myKey: 3})
-
-# print("!")
-# res = 0
-# cnt = 0
-# n1,n2,n3,n4,n5 = "","","","",""
-cn = 123
-cone = cn % 10
-resCnt = Counter()
+p1Res = 0
+p2ResCnt = Counter()
+cnt = 0
 for k in open("input.txt"):
     val = int(k.strip())
     cCnt = Counter()
-    # fVal = val % 10
-    # val = secret2kStep(val)
     patVals = ["", "", "", "", ""]
     prevDigit = val % 10
-    ldVals = [prevDigit, "", "", "", ""]
     nValsSet = False
-    # subtct = 0
     for j in range(2000):
-        # do some Calculations
         val = secret2kStep(val)
         lastDigit =   val % 10
         digitToAdd = lastDigit - prevDigit  
         patVals = [digitToAdd] +patVals[:4]
-        ldVals = [lastDigit] + ldVals[:4]
         if not nValsSet:
             if all(isinstance(x,int) for x in patVals):
                 nValsSet = True
         if nValsSet:
-            CSum = lastDigit
             cSeq = str(patVals[3])+","+str(patVals[2])+","+str(patVals[1])+","+str(patVals[0])
             if cSeq not in cCnt:
-                cCnt.update({cSeq:CSum})
+                cCnt.update({cSeq:lastDigit})
             
         prevDigit = lastDigit
-    resCnt.update(cCnt)
+    p1Res += val
+    p2ResCnt.update(cCnt)
+    if cnt % 400 == 0:
+        print("Working:",cnt)
+    cnt += 1
 
-maxKey = max(resCnt, key=resCnt.get)
-maxValue = resCnt[maxKey]
-print(maxKey)
-print(maxValue)
-print("!!")
+maxKey = max(p2ResCnt, key=p2ResCnt.get)
+p2Res  = p2ResCnt[maxKey]
 
-
+print("P1:", p1Res)
+print("P2", p2Res)
