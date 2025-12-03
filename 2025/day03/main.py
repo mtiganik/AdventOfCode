@@ -1,25 +1,16 @@
-# f = open("input.txt")
+def exec(inp,dx):
+  r,id,inp = "",0,inp.rstrip()
+  for n in range(dx,0,-1):
+    ci = cm = 0
+    for i in range(id, len(inp)):
+      if int(inp[i]) > cm and len(inp[i:]) > n-1:
+        cm, ci = int(inp[i]), i
+    id,r = ci+1, r + str(cm)
+  return int(r)
 
-count = 0
-def findLargest(inp):
-  res = ""
-  lastIndex = 0
-  digits = 2
-  for n in range(digits,0,-1):
-    currIndex = 0
-    currMax = 0
-    for i in range(lastIndex, len(inp)):
-      if int(inp[i]) > currMax and len(inp[i:]) > n-1:
-        currMax, currIndex = int(inp[i]), i
-    lastIndex = currIndex +1
-    res += str(currMax)
-  print(res)
-  return int(res)
+p1 = p2 = 0
+for inp in open("input.txt"):
+  p1,p2 = p1 + exec(inp,2), p2 + exec(inp,12)
 
-    
-
-for x in open("input.txt"):
-  inp = x.replace("\n", "")
-  count+= findLargest(inp)
-
-print("Part2: ", count)
+print("Part1: ", p1)
+print("Part2: ", p2)
