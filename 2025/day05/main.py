@@ -1,51 +1,41 @@
 f = open("input.txt")
 fresh = []
 freshBool = True
-cnt = 0
+p1 = p2 = 0
 
 for x in f:
   if x == "\n":
-    break
     freshBool = False
   elif freshBool:
     [s,e] = x.split("-")
-    #fresh.append(range(int(s),int(e)))
     fresh.append([int(s),int(e)])
+  else:
+    available = int(x)
+    for k in fresh:
+      if available in range(k[0],k[1]+1):
+        p1 += 1
+        break
 
-# y = range(5,5)
-print(len(range(5,5)))
 
-currCnt = 0
 validRanges = []
 for i,elemens in enumerate(fresh):
-  # currRanges = []
   k = [elemens[0], elemens[1]]
-
   intesects = 0
   isMatch = False
   for r in validRanges:
-    # r = fresh[j]
     if k[0] == r[0] and k[1] == r[1]:
       isMatch = True
       break
-
-      # raise Exception("Shouldnt be here")
-    #A
     if k[0] >= r[0] and k[1] <= r[1]:
-      # all the elements in this range have already been checked sum is 0
       isMatch = True
       break
-    #D
     elif k[0] < r[0] and k[1] > r[1]:
       r[0] = k[0]
       r[1] = k[1]
       isMatch = True
-    #B
     elif k[0] >= r[0] and k[0] < r[1]:
-      #split k elemens
       r[1] = k[1]
       isMatch = True 
-    #C
     elif k[1] > r[0] and k[1] <= r[1]:
       r[0] = k[0]
       isMatch = True
@@ -71,7 +61,7 @@ while True:
     break
 
 for k in validRanges:
-  cnt += k[1]-k[0]+1
+  p2 += k[1]-k[0]+1
 
-print(cnt)
-print("Hello")
+print("Part1:",p1)
+print("Part2:",p2)
