@@ -1,24 +1,26 @@
 f = open("input.txt")
-cnt = 0
+p1 = 0
 grid = []
 for x in f:
   arr = list(x.strip())
   grid.append(arr)
 
 start = grid[0].index("S")
-grid[0][start] = "|"
+dict = {}
+for i in range(len(grid[0])):
+  dict[i] = 0
 
-for i in range(1,len(grid)):
-  for j in range(0,len(grid[0])):
-    if grid[i-1][j] =="|":
-      if grid[i][j] == "^":
-        grid[i][j-1] = "|"
-        grid[i][j+1] = "|"
-        cnt += 1
-      else:
-        grid[i][j] = "|"
+dict[start] = 1
+for i in range(2, len(grid),2):
+  for j in range(len(grid[0])):
+    if grid[i][j] == "^" and dict[j] != 0:
+      for y in (j-1,j+1):
+        dict[y] += dict[j]
+      dict[j] = 0
 
-for k in grid:
-  print("".join(k))
+sum = 0
+for i,j in enumerate(dict):
+  sum += dict[i]
+print(sum)
 
-print(cnt)
+
